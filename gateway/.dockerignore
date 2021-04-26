@@ -1,0 +1,7 @@
+schema.graphql
+nexus-typegen.ts
+Dockerfile
+docker-compose.yaml
+node_modules
+docker-compose.yml
+docker-compose.prod.yml

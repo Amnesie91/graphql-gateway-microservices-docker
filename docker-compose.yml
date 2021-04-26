@@ -1,0 +1,53 @@
+version: "3.7"
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+      target: base
+    restart: always
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    volumes:
+      - /home/node/app/node_modules
+      - ./gateway/src:/home/node/app/src
+    networks:
+      - microservices
+    depends_on:
+      - template
+      # - template2
+
+  template:
+    build:
+      context: ./microservices/template
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - /home/node/app/node_modules
+      - ./microservices/template:/home/node/app
+    container_name: template-docker
+    expose:
+      - "3000"
+    command: npm run dev
+    networks:
+      - microservices
+
+  # template2:
+  #   build:
+  #     context: ./microservices/template2
+  #     dockerfile: Dockerfile
+  #     target: base
+  #   volumes:
+  #     - /home/node/app/node_modules
+  #     - ./microservices/template2:/home/node/app
+  #   container_name: template2-docker
+  #   expose:
+  #     - "3000"
+  #   command: npm run dev
+  #   networks:
+  #     - microservices
+
+networks:
+  microservices:
